@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./ProductList.css"
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -36,7 +37,7 @@ const ProductList = () => {
             className="product-image"
           />
           <h3>{product.title}</h3>
-          <p>₹{product.price}</p>
+          <p>${product.price}</p>
         </div>
       ))}
     </div>
