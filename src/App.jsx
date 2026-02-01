@@ -1,11 +1,12 @@
 import Header from "./components/Header";
+import ProductList from "./components/ProductList";
 
 function App() {
   return (
     <>
       <Header />
       <main>
-        <h2>Welcome to ShoppyGlobe</h2>
+        <ProductList />
       </main>
     </>
   );
