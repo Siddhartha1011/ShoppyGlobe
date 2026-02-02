@@ -1,46 +1,32 @@
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
-import "./ProductList.css"
+import useProducts from "../hooks/useProducts";
+import { selectSearchQuery } from "../redux/cartSlice";
+import "./ProductList.css";
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { products, loading, error } = useProducts();
+  const searchQuery = useSelector(selectSearchQuery);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("https://dummyjson.com/products");
-        if (!response.ok) throw new Error("Failed to fetch products");
-
-        const data = await response.json();
-        setProducts(data.products);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  const handleAddToCart = (product) => {
-    console.log("Added to cart:", product);
-  };
+  const filteredProducts = products.filter((product) =>
+    product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (loading) return <h2>Loading products...</h2>;
   if (error) return <h2>Error: {error}</h2>;
 
   return (
-    <div className="product-list">
-      {products.map((product) => (
-        <ProductItem
-          key={product.id}
-          product={product}
-          onAddToCart={handleAddToCart}
-        />
-      ))}
+    <div className="product-list-container">
+      <div className="product-list">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <ProductItem key={product.id} product={product} />
+          ))
+        ) : (
+          <p className="no-products">No products found matching your search.</p>
+        )}
+      </div>
     </div>
   );
 };
