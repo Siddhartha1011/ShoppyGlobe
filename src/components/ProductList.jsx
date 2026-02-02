@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ProductItem from "./ProductItem";
 import "./ProductList.css"
 
 const ProductList = () => {
@@ -24,21 +25,21 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
+  const handleAddToCart = (product) => {
+    console.log("Added to cart:", product);
+  };
+
   if (loading) return <h2>Loading products...</h2>;
   if (error) return <h2>Error: {error}</h2>;
 
   return (
     <div className="product-list">
       {products.map((product) => (
-        <div className="product-item" key={product.id}>
-          <img
-            src={product.thumbnail}
-            alt={product.title}
-            className="product-image"
-          />
-          <h3>{product.title}</h3>
-          <p>${product.price}</p>
-        </div>
+        <ProductItem
+          key={product.id}
+          product={product}
+          onAddToCart={handleAddToCart}
+        />
       ))}
     </div>
   );
