@@ -26,7 +26,7 @@ const ProductItem = ({ product }) => {
         <h3>{product.title}</h3>
       </Link>
 
-      <p>₹{product.price}</p>
+      <p>${product.price}</p>
 
       <button onClick={handleAddToCart}>
         Add to Cart

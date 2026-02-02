@@ -14,7 +14,7 @@ const CartItem = ({ item }) => {
       <img src={item.thumbnail} alt={item.title} loading="lazy" />
       <div className="cart-item-info">
         <h4>{item.title}</h4>
-        <p>Price: ₹{item.price}</p>
+        <p>Price: ${item.price}</p>
         <div className="quantity-controls">
           <button onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
           <span>{item.quantity}</span>

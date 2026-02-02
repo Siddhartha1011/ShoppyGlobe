@@ -29,7 +29,7 @@ const Cart = () => {
           ))}
         </div>
         <div className="cart-total">
-          <h3>Total: ₹{total.toFixed(2)}</h3>
+          <h3>Total: ${total.toFixed(2)}</h3>
           <Link to="/checkout" className="checkout-button">
             Proceed to Checkout
           </Link>

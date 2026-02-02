@@ -141,13 +141,13 @@ const Checkout = () => {
                 <div className="summary-item-info">
                   <h4>{item.title}</h4>
                   <p>Quantity: {item.quantity}</p>
-                  <p>Price: ₹{item.price}</p>
+                  <p>Price: ${item.price}</p>
                 </div>
               </div>
             ))}
           </div>
           <div className="summary-total">
-            <h3>Total: ₹{total.toFixed(2)}</h3>
+            <h3>Total: ${total.toFixed(2)}</h3>
           </div>
         </div>
       </div>
