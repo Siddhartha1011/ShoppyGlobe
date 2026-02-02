@@ -2,7 +2,7 @@
 
 A modern, full-featured e-commerce application built with React and Vite. ShoppyGlobe provides a seamless shopping experience with product browsing, cart management, and checkout functionality.
 
-**Repository Link:** [https://github.com/yourusername/ShoppyGlobe](https://github.com/yourusername/ShoppyGlobe)
+**Repository Link:** [https://github.com/Siddhartha1011/ShoppyGlobe](https://github.com/Siddhartha1011/ShoppyGlobe)
 
 ##  Features
 
@@ -71,7 +71,7 @@ A modern, full-featured e-commerce application built with React and Vite. Shoppy
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ShoppyGlobe.git
+git clone https://github.com/Siddhartha1011/ShoppyGlobe.git
 cd ShoppyGlobe/shoppyglobe
 ```
 
