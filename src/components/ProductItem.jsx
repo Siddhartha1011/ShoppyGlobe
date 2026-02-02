@@ -1,6 +1,19 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
 
-const ProductItem = ({ product, onAddToCart }) => {
+const ProductItem = ({ product }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      thumbnail: product.thumbnail
+    }));
+  };
+
   return (
     <div className="product-item">
       <Link to={`/products/${product.id}`}>
@@ -15,7 +28,7 @@ const ProductItem = ({ product, onAddToCart }) => {
 
       <p>₹{product.price}</p>
 
-      <button onClick={() => onAddToCart(product)}>
+      <button onClick={handleAddToCart}>
         Add to Cart
       </button>
     </div>

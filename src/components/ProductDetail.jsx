@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
 import "./ProductDetail.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,7 +36,14 @@ const ProductDetail = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    console.log("Added to cart:", product);
+    if (product) {
+      dispatch(addToCart({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        thumbnail: product.thumbnail
+      }));
+    }
   };
 
   if (loading) return <h2>Loading product...</h2>;
@@ -49,6 +59,7 @@ const ProductDetail = () => {
             src={product.thumbnail}
             alt={product.title}
             loading="lazy"
+            decoding="async"
           />
         </div>
   
