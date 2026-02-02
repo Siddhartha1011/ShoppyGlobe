@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./ProductDetail.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -39,43 +40,54 @@ const ProductDetail = () => {
   if (error) return <h2>Error: {error}</h2>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <img
-        src={product.thumbnail}
-        alt={product.title}
-        width="300"
-        loading="lazy"
-      />
-
-      <h2>{product.title}</h2>
-      <p>{product.description}</p>
-
-      <h3>₹{product.price}</h3>
-
-      <p><strong>Rating:</strong> {product.rating}/5</p>
-      <p><strong>Availability:</strong> {product.availabilityStatus}</p>
-
-      <p><strong>Warranty:</strong> {product.warrantyInformation}</p>
-      <p><strong>Shipping:</strong> {product.shippingInformation}</p>
-      <p><strong>Return Policy:</strong> {product.returnPolicy}</p>
-
-      {/* Add to Cart Button */}
-      <button onClick={handleAddToCart}>
-        Add to Cart
-      </button>
-
-      <h3>Reviews</h3>
-      {product.reviews && product.reviews.length > 0 ? (
-        product.reviews.map((review, index) => (
-          <div key={index}>
-            <p><strong>{review.reviewerName}</strong></p>
-            <p>Rating: {review.rating}/5</p>
-            <p>{review.comment}</p>
-          </div>
-        ))
-      ) : (
-        <p>No reviews available</p>
-      )}
+    <div className="product-detail">
+      {/* Image + Description Container */}
+      <div className="product-main-container">
+        {/* Image Card */}
+        <div className="product-card image-card">
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            loading="lazy"
+          />
+        </div>
+  
+        {/* Description Card */}
+        <div className="product-card description-card">
+          <h2>{product.title}</h2>
+          <p className="description">{product.description}</p>
+  
+          <h3 className="price">₹{product.price}</h3>
+  
+          <p><strong>Rating:</strong> <span className="info-value">{product.rating}/5</span></p>
+          <p><strong>Availability:</strong> <span className="info-value">{product.availabilityStatus}</span></p>
+          <p><strong>Warranty:</strong> <span className="info-value">{product.warrantyInformation}</span></p>
+          <p><strong>Shipping:</strong> <span className="info-value">{product.shippingInformation}</span></p>
+          <p><strong>Return Policy:</strong> <span className="info-value">{product.returnPolicy}</span></p>
+  
+          <button onClick={handleAddToCart}>Add to Cart</button>
+        </div>
+      </div>
+  
+      {/* Reviews Section */}
+      <div className="reviews-card">
+        <h3>Reviews</h3>
+  
+        {product.reviews && product.reviews.length > 0 ? (
+          product.reviews.map((review, index) => (
+            <div className="review-item" key={index}>
+              <p className="reviewer">{review.reviewerName}</p>
+              <p>
+                <span className="rating-label">Rating:</span>
+                <span className="rating-value">{review.rating}/5</span>
+              </p>
+              <p className="comment">{review.comment}</p>
+            </div>
+          ))
+        ) : (
+          <p>No reviews available</p>
+        )}
+      </div>
     </div>
   );
 };
