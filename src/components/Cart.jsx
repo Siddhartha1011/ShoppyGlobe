@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
 import { selectCartItems } from "../redux/cartSlice";
 import { Link } from "react-router-dom";
+import "./Cart.css";
 
 const Cart = () => {
   const items = useSelector(selectCartItems);
@@ -10,23 +11,30 @@ const Cart = () => {
 
   if (items.length === 0)
     return (
-      <div style={{ padding: "20px" }}>
-        <h2>Your cart is empty</h2>
-        <Link to="/">Go Shopping</Link>
+      <div className="cart-container">
+        <div className="cart-empty">
+          <h2>Your cart is empty</h2>
+          <Link to="/">Go Shopping</Link>
+        </div>
       </div>
     );
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Your Cart</h2>
-      {items.map((item) => (
-        <CartItem key={item.id} item={item} />
-      ))}
-
-      <h3>Total: ₹{total.toFixed(2)}</h3>
-      <Link to="/checkout">
-        <button>Proceed to Checkout</button>
-      </Link>
+    <div className="cart-container">
+      <div className="cart-content">
+        <h2>Your Cart</h2>
+        <div className="cart-items">
+          {items.map((item) => (
+            <CartItem key={item.id} item={item} />
+          ))}
+        </div>
+        <div className="cart-total">
+          <h3>Total: ₹{total.toFixed(2)}</h3>
+          <Link to="/checkout" className="checkout-button">
+            Proceed to Checkout
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
