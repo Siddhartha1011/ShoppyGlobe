@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import "./ProductDetail.css";
 
+const API_BASE_URL = "http://localhost:3000/api";
+
 const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -15,16 +17,25 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(
-          `https://dummyjson.com/products/${id}`
-        );
+        const response = await fetch(`${API_BASE_URL}/products/${id}`);
 
         if (!response.ok) {
           throw new Error("Product not found");
         }
 
         const data = await response.json();
-        setProduct(data);
+
+        // Normalize product shape from backend
+        const normalized = {
+          id: data._id || data.id,
+          title: data.title || data.name || "",
+          description: data.description || "",
+          price: data.price ?? 0,
+          thumbnail: data.thumbnail || data.imageUrl || "",
+          stockQuantity: data.stockQuantity ?? 0,
+        };
+
+        setProduct(normalized);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -37,12 +48,14 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      dispatch(addToCart({
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        thumbnail: product.thumbnail
-      }));
+      dispatch(
+        addToCart({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          thumbnail: product.thumbnail,
+        })
+      );
     }
   };
 
@@ -62,42 +75,21 @@ const ProductDetail = () => {
             decoding="async"
           />
         </div>
-  
+
         {/* Description Card */}
         <div className="product-card description-card">
           <h2>{product.title}</h2>
           <p className="description">{product.description}</p>
-  
+
           <h3 className="price">${product.price}</h3>
-  
-          <p><strong>Rating:</strong> <span className="info-value">{product.rating}/5</span></p>
-          <p><strong>Availability:</strong> <span className="info-value">{product.availabilityStatus}</span></p>
-          <p><strong>Warranty:</strong> <span className="info-value">{product.warrantyInformation}</span></p>
-          <p><strong>Shipping:</strong> <span className="info-value">{product.shippingInformation}</span></p>
-          <p><strong>Return Policy:</strong> <span className="info-value">{product.returnPolicy}</span></p>
-  
+
+          <p>
+            <strong>In stock:</strong>{" "}
+            <span className="info-value">{product.stockQuantity}</span>
+          </p>
+
           <button onClick={handleAddToCart}>Add to Cart</button>
         </div>
-      </div>
-  
-      {/* Reviews Section */}
-      <div className="reviews-card">
-        <h3>Reviews</h3>
-  
-        {product.reviews && product.reviews.length > 0 ? (
-          product.reviews.map((review, index) => (
-            <div className="review-item" key={index}>
-              <p className="reviewer">{review.reviewerName}</p>
-              <p>
-                <span className="rating-label">Rating:</span>
-                <span className="rating-value">{review.rating}/5</span>
-              </p>
-              <p className="comment">{review.comment}</p>
-            </div>
-          ))
-        ) : (
-          <p>No reviews available</p>
-        )}
       </div>
     </div>
   );

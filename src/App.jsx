@@ -8,6 +8,7 @@ const ProductDetail = lazy(() => import("./components/ProductDetail"));
 const Cart = lazy(() => import("./components/Cart"));
 const Checkout = lazy(() => import("./components/Checkout"));
 const NotFound = lazy(() => import("./components/NotFound"));
+const Auth = lazy(() => import("./components/Auth"));
 
 // Layout component with Header
 const Layout = () => {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
+        path: "auth",
+        element: <Auth />,
+      },
+      {
         path: "*",
         element: <NotFound />,
       },
@@ -56,3 +61,4 @@ function App() {
 }
 
 export default App;
+
